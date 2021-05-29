@@ -37,7 +37,7 @@ var gui={mute: new Promise(function(myResolve,_myReject){
   let mic=null;
   let micparentelement;
   let timeout;
- async function defineGuiElements(){
+  async function defineGuiElements(){
   console.log("Gui mute defineGuiElements Started")
   mic = document.querySelector('[jsname="BOHaEe"]')
   closecall=document.querySelector("[data-tooltip='Abandonar la llamada']");
@@ -59,9 +59,9 @@ setInterval(async function(){
   const usershere = document.querySelector("span.wnPUne.N0PJ8e").innerText
   // console.log(usershere);
   if(usershere != null && usershere != undefined){
-   if(usershere > maxuserscount){
-     maxuserscount = usershere
-   }
+    if(usershere > maxuserscount){
+      maxuserscount = usershere
+    }
     if(recordingstate != true){
       obs.send('StartRecording',{})
       recordingstate=true
@@ -82,7 +82,7 @@ setInterval(async function(){
       return parseInt(total / totalUsersArray.length)
     }
     if(userprom() > 0 && usershere <= userprom()/2 && userprom() != null){
-     document.querySelector("[data-tooltip='Abandonar la llamada']").click()
+      document.querySelector("[data-tooltip='Abandonar la llamada']").click()
       if(recordingstate != false){  
         setTimeout(async function(){
           recordingstate=false
@@ -118,7 +118,7 @@ async function micclick(){
       // console.log("micmute: "+micmuted)
       obs.send("SetMute",{source:obs.sources.mic,mute:micmuted})
     }
-    micbuttonTimeout = setTimeout(setMute, 125)
+    micbuttonTimeout = setTimeout(setMute, 125) //? 
       
 });
   //timeout=setTimeout(micclick,1000)
