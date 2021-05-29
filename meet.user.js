@@ -18,10 +18,20 @@ let recordingstate=null
 let fullscreen=false
 let micbuttonTimeout
 let totalUsersArray=[]
-let connectdata = GM_getValue("obs",{
-  address:"localhost:4444",
-  password:"password"
-});
+let connectdata = GM_getValue("obs",undefined);
+if(!connectdata){
+  let def = {
+    auth:{
+      address:"localhost:4444",
+      password:"password"
+    },
+    sources:{
+      mic:"Mic/Aux"
+    }
+  }
+  GM_setValue("obs",def);
+  connectdata = def;
+}
 var gui={mute: new Promise(function(myResolve,_myReject){
   console.log("Gui mute promise started")
   let mic=null;
@@ -106,7 +116,7 @@ async function micclick(){
         micmuted = false;
       }
       // console.log("micmute: "+micmuted)
-      obs.send("SetMute",{source:"Micrófono",mute:micmuted})
+      obs.send("SetMute",{source:obs.sources.mic,mute:micmuted})
     }
     micbuttonTimeout = setTimeout(setMute, 125)
       
@@ -116,4 +126,4 @@ async function micclick(){
 timeout=setTimeout(micclick,1000)
 })();
 const obs = new OBSWebSocket();
-obs.connect(connectdata)
+obs.connect(connectdata.auth)
